@@ -111,6 +111,12 @@
             transform: translateX(-50%);
             animation: flicker 0.5s ease-in-out infinite alternate;
             box-shadow: 0 0 20px #ff9800, 0 0 40px #ff5722;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .flame:hover {
+            transform: translateX(-50%) scale(1.2);
         }
 
         @keyframes flicker {
@@ -163,6 +169,18 @@
                 #ce93d8 20px,
                 #ce93d8 40px
             );
+        }
+
+        .hint {
+            color: #c2185b;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         /* 祝福卡片 */
@@ -280,11 +298,12 @@
         <div class="cake-container">
             <div class="cake">
                 <div class="candle">
-                    <div class="flame"></div>
+                    <div class="flame" onclick="blowCandles()" title="点击吹灭蜡烛许愿吧~"></div>
                 </div>
                 <div class="cake-layer"></div>
                 <div class="cake-layer bottom"></div>
             </div>
+            <p class="hint">👆 点击火焰吹灭蜡烛许愿</p>
         </div>
 
         <div class="card">
@@ -296,7 +315,6 @@
             <p class="love-text">生日快乐！永远爱你 ❤️</p>
         </div>
 
-        <button class="btn" onclick="blowCandles()">🎈 点击吹灭蜡烛 🎈</button>
         <button class="btn" onclick="startFireworks()">🎆 放烟花庆祝 🎆</button>
 
         <div class="footer">
@@ -307,6 +325,8 @@
     </div>
 
     <script>
+        let candleBlown = false;
+
         // 创建飘落的爱心
         function createHearts() {
             const heartEmojis = ['❤️', '💕', '💗', '💖', '💘', '💝'];
@@ -328,23 +348,29 @@
 
         // 吹灭蜡烛
         function blowCandles() {
+            if (candleBlown) return;
+            
             const flames = document.querySelectorAll('.flame');
             flames.forEach(flame => {
                 flame.style.opacity = '0';
-                flame.style.transition = 'opacity 0.5s ease';
+                flame.style.transition = 'opacity 0.8s ease';
             });
             
             // 播放庆祝效果
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 setTimeout(() => {
                     createFirework(
                         Math.random() * window.innerWidth,
                         Math.random() * window.innerHeight
                     );
-                }, i * 100);
+                }, i * 80);
             }
             
-            alert('🎂 蜡烛吹灭啦！万雪的愿望一定会实现的！✨');
+            setTimeout(() => {
+                alert('🎂 蜡烛吹灭啦！雪儿闭上眼睛许个愿吧~\n✨ 你的愿望一定会实现的！');
+            }, 500);
+            
+            candleBlown = true;
         }
 
         // 创建烟花
@@ -395,13 +421,13 @@
 
         // 开始烟花表演
         function startFireworks() {
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 12; i++) {
                 setTimeout(() => {
                     createFirework(
                         Math.random() * window.innerWidth,
                         Math.random() * window.innerHeight * 0.6
                     );
-                }, i * 300);
+                }, i * 250);
             }
         }
 
