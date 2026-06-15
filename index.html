@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 杨万雪 生日快乐 🎂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 飘落的爱心 */
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            color: #ff6b9d;
+            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 3rem;
+            color: #d63384;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #c2185b;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        /* 蛋糕样式 */
+        .cake-container {
+            margin: 40px auto;
+            position: relative;
+            display: inline-block;
+        }
+
+        .cake {
+            position: relative;
+        }
+
+        .candle {
+            width: 15px;
+            height: 60px;
+            background: linear-gradient(to right, #fff 0%, #f8f9fa 50%, #fff 100%);
+            border-radius: 3px;
+            margin: 0 auto 5px;
+            position: relative;
+        }
+
+        .flame {
+            width: 20px;
+            height: 30px;
+            background: radial-gradient(ellipse at bottom, #ffeb3b 0%, #ff9800 50%, #ff5722 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: flicker 0.5s ease-in-out infinite alternate;
+            box-shadow: 0 0 20px #ff9800, 0 0 40px #ff5722;
+        }
+
+        @keyframes flicker {
+            0% {
+                transform: translateX(-50%) scale(1) rotate(-2deg);
+            }
+            100% {
+                transform: translateX(-50%) scale(1.1) rotate(2deg);
+            }
+        }
+
+        .cake-layer {
+            width: 250px;
+            height: 80px;
+            background: linear-gradient(to bottom, #f8bbd9 0%, #f48fb1 100%);
+            border-radius: 10px 10px 5px 5px;
+            margin: 5px auto;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cake-layer::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: repeating-linear-gradient(
+                90deg,
+                #fff 0px,
+                #fff 20px,
+                #f8bbd9 20px,
+                #f8bbd9 40px
+            );
+            border-radius: 10px;
+        }
+
+        .cake-layer.bottom {
+            width: 300px;
+            height: 100px;
+            background: linear-gradient(to bottom, #ce93d8 0%, #ab47bc 100%);
+        }
+
+        .cake-layer.bottom::before {
+            background: repeating-linear-gradient(
+                90deg,
+                #fff 0px,
+                #fff 20px,
+                #ce93d8 20px,
+                #ce93d8 40px
+            );
+        }
+
+        /* 祝福卡片 */
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(214, 51, 132, 0.2);
+            backdrop-filter: blur(10px);
+            text-align: left;
+        }
+
+        .card h2 {
+            color: #d63384;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 2.2;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-indent: 2em;
+        }
+
+        .love-text {
+            color: #e91e63;
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        /* 按钮 */
+        .btn {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.6);
+        }
+
+        /* 烟花效果 */
+        .firework {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .footer {
+            margin-top: 50px;
+            color: #880e4f;
+            font-size: 1rem;
+        }
+
+        .heart-big {
+            font-size: 3rem;
+            animation: heartbeat 1s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.1);
+            }
+            50% {
+                transform: scale(1);
+            }
+            75% {
+                transform: scale(1.1);
+            }
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .cake-layer {
+                width: 200px;
+            }
+            
+            .cake-layer.bottom {
+                width: 240px;
+            }
+            
+            .card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">🎂 杨万雪 生日快乐 🎂</h1>
+        <p class="subtitle">致我最爱的女孩</p>
+
+        <div class="cake-container">
+            <div class="cake">
+                <div class="candle">
+                    <div class="flame"></div>
+                </div>
+                <div class="cake-layer"></div>
+                <div class="cake-layer bottom"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>💌 TO：我的女孩 💌</h2>
+            <p>很高兴陪你长大了一岁！这是我以男朋友的身份陪你度过的第一个生日，真的很开心我们能相遇。</p>
+            <p>我是一个敏感的人，谢谢你能照顾我的情绪。感谢你出现在我的生命里，让我感受到了幸福与温暖。</p>
+            <p>往后的岁岁年年，我都希望我们的身边有彼此，相互包容，相互理解，共同成长！</p>
+            <p>祝我的女朋友天天开心，岁岁平安。生活温馨美好，梦想成真。</p>
+            <p class="love-text">生日快乐！永远爱你 ❤️</p>
+        </div>
+
+        <button class="btn" onclick="blowCandles()">🎈 点击吹灭蜡烛 🎈</button>
+        <button class="btn" onclick="startFireworks()">🎆 放烟花庆祝 🎆</button>
+
+        <div class="footer">
+            <span class="heart-big">❤️</span>
+            <p>爱你的男朋友</p>
+            <p id="date"></p>
+        </div>
+    </div>
+
+    <script>
+        // 创建飘落的爱心
+        function createHearts() {
+            const heartEmojis = ['❤️', '💕', '💗', '💖', '💘', '💝'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 7000);
+            }, 300);
+        }
+
+        // 吹灭蜡烛
+        function blowCandles() {
+            const flames = document.querySelectorAll('.flame');
+            flames.forEach(flame => {
+                flame.style.opacity = '0';
+                flame.style.transition = 'opacity 0.5s ease';
+            });
+            
+            // 播放庆祝效果
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createFirework(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight
+                    );
+                }, i * 100);
+            }
+            
+            alert('🎂 蜡烛吹灭啦！万雪的愿望一定会实现的！✨');
+        }
+
+        // 创建烟花
+        function createFirework(x, y) {
+            const colors = ['#ff6b9d', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6b6b', '#c44569'];
+            const particles = 15;
+            
+            for (let i = 0; i < particles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.width = '8px';
+                particle.style.height = '8px';
+                particle.style.borderRadius = '50%';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                const angle = (i / particles) * Math.PI * 2;
+                const velocity = 100 + Math.random() * 100;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                document.body.appendChild(particle);
+                
+                let posX = x;
+                let posY = y;
+                let opacity = 1;
+                
+                const animate = () => {
+                    posX += vx * 0.02;
+                    posY += vy * 0.02 + 2;
+                    opacity -= 0.02;
+                    
+                    particle.style.left = posX + 'px';
+                    particle.style.top = posY + 'px';
+                    particle.style.opacity = opacity;
+                    
+                    if (opacity > 0) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        particle.remove();
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+        }
+
+        // 开始烟花表演
+        function startFireworks() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    createFirework(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight * 0.6
+                    );
+                }, i * 300);
+            }
+        }
+
+        // 设置日期
+        document.getElementById('date').textContent = new Date().toLocaleDateString('zh-CN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // 初始化
+        createHearts();
+        
+        // 自动放几个烟花
+        setTimeout(() => {
+            startFireworks();
+        }, 1000);
+    </script>
+</body>
+</html>
