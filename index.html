@@ -44,7 +44,7 @@
             50% { opacity: 1; }
         }
 
-        /* 飘落的爱心 - 减少数量 */
+        /* 飘落的爱心 */
         .heart {
             position: fixed;
             font-size: 20px;
@@ -495,7 +495,7 @@
             letter-spacing: 2px;
         }
 
-        /* 烟花 - 优化性能 */
+        /* 烟花 */
         .firework {
             position: fixed;
             pointer-events: none;
@@ -531,26 +531,6 @@
             }
         }
 
-        /* 音乐提示 */
-        .music-hint {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-size: 0.95rem;
-            color: #c2185b;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            animation: musicHint 2s ease-in-out infinite;
-        }
-
-        @keyframes musicHint {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
         /* 响应式 */
         @media (max-width: 600px) {
             .title {
@@ -583,12 +563,10 @@
     </style>
 </head>
 <body>
-    <!-- 背景音乐 - 生日快乐歌 -->
-    <audio id="bgMusic" loop preload="auto">
+    <!-- 背景音乐 - 隐藏 -->
+    <audio id="bgMusic" loop preload="auto" muted>
         <source src="https://www.soundjay.com/misc/sounds/happy-birthday-piano-version-1.mp3" type="audio/mpeg">
     </audio>
-
-    <div class="music-hint">🎵 点击页面任意处播放生日快乐歌 ♪</div>
 
     <div class="container">
         <h1 class="title">🎂 杨万雪 生日快乐 🎂</h1>
@@ -638,9 +616,31 @@
 
     <script>
         let candleBlown = false;
-        let musicPlayed = false;
 
-        // 创建星星 - 减少到20个
+        // 音乐自动播放 - 先静音播放，用户交互后取消静音
+        function initMusic() {
+            const music = document.getElementById('bgMusic');
+            music.volume = 0.5;
+            
+            // 先尝试静音自动播放
+            music.play().then(() => {
+                // 静音播放成功，等待用户任意点击取消静音
+                const unmute = () => {
+                    music.muted = false;
+                    document.removeEventListener('click', unmute);
+                };
+                document.addEventListener('click', unmute, { once: true });
+            }).catch(() => {
+                // 自动播放失败，用户点击后播放
+                const play = () => {
+                    music.play().catch(() => {});
+                    document.removeEventListener('click', play);
+                };
+                document.addEventListener('click', play, { once: true });
+            });
+        }
+
+        // 创建星星
         function createStars() {
             for (let i = 0; i < 20; i++) {
                 const star = document.createElement('div');
@@ -653,7 +653,7 @@
             }
         }
 
-        // 创建飘落的爱心 - 降低频率
+        // 创建飘落的爱心
         function createHearts() {
             const heartEmojis = ['❤️', '💕', '💗', '💖', '✨'];
             
@@ -669,10 +669,10 @@
                 setTimeout(() => {
                     heart.remove();
                 }, 10000);
-            }, 500); // 每500ms一个，更慢
+            }, 500);
         }
 
-        // 只在特殊时刻放烟花，不自动持续
+        // 触发烟花
         function triggerFireworks(count) {
             for (let i = 0; i < count; i++) {
                 setTimeout(() => {
@@ -694,7 +694,6 @@
                 flame.style.transition = 'opacity 1s ease';
             });
             
-            // 适量烟花庆祝
             triggerFireworks(20);
             
             setTimeout(() => {
@@ -708,8 +707,6 @@
         function openLetter() {
             const modal = document.getElementById('letterModal');
             modal.classList.add('show');
-            
-            // 适量烟花
             triggerFireworks(12);
         }
 
@@ -720,10 +717,10 @@
             modal.classList.remove('show');
         }
 
-        // 创建烟花 - 优化性能：减少粒子数，简化计算
+        // 创建烟花
         function createFirework(x, y) {
             const colors = ['#ff6b9d', '#ffd93d', '#6bcb77', '#4d96ff', '#fff'];
-            const particles = 12; // 从18减到12
+            const particles = 12;
             
             for (let i = 0; i < particles; i++) {
                 const particle = document.createElement('div');
@@ -766,26 +763,6 @@
             }
         }
 
-        // 播放背景音乐
-        function playMusic() {
-            if (musicPlayed) return;
-            
-            const music = document.getElementById('bgMusic');
-            music.volume = 0.5;
-            
-            music.play().then(() => {
-                musicPlayed = true;
-                document.querySelector('.music-hint').textContent = '🎵 生日快乐歌播放中 ♪';
-            }).catch(() => {
-                // 等待用户点击
-            });
-        }
-
-        // 用户点击页面任意处播放音乐
-        document.body.addEventListener('click', () => {
-            playMusic();
-        }, { once: true });
-
         // 设置日期
         document.getElementById('date').textContent = new Date().toLocaleDateString('zh-CN', {
             year: 'numeric',
@@ -794,10 +771,11 @@
         });
 
         // 初始化
+        initMusic();
         createStars();
         createHearts();
         
-        // 开场少量烟花
+        // 开场烟花
         setTimeout(() => {
             triggerFireworks(8);
         }, 800);
