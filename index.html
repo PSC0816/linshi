@@ -183,38 +183,204 @@
             50% { opacity: 0.5; }
         }
 
-        /* 祝福卡片 */
-        .card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 20px;
-            padding: 40px;
-            margin: 40px 0;
-            box-shadow: 0 10px 40px rgba(214, 51, 132, 0.2);
-            backdrop-filter: blur(10px);
-            text-align: left;
+        /* 信封样式 - 更精致 */
+        .envelope-wrapper {
+            margin: 50px auto;
         }
 
-        .card h2 {
+        .envelope-hint {
+            color: #c2185b;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        .envelope {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(145deg, #fff 0%, #fff0f5 50%, #ffe4ec 100%);
+            border-radius: 8px;
+            position: relative;
+            margin: 0 auto;
+            cursor: pointer;
+            box-shadow: 
+                0 15px 35px rgba(214, 51, 132, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(255, 182, 193, 0.3);
+        }
+
+        .envelope:hover {
+            transform: translateY(-10px) rotate(-2deg) scale(1.05);
+            box-shadow: 
+                0 25px 50px rgba(214, 51, 132, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .envelope-body {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, transparent 48%, rgba(255, 182, 193, 0.1) 49%, rgba(255, 182, 193, 0.1) 51%, transparent 52%);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 52%;
+            background: linear-gradient(135deg, #ffc8d8 0%, #ff9eb5 50%, #ff85a2 100%);
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            z-index: 10;
+            box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .envelope-flap::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+        }
+
+        .envelope-seal {
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle at 30% 30%, #ff6b9d 0%, #e91e63 50%, #c2185b 100%);
+            border-radius: 50%;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.6rem;
+            box-shadow: 
+                0 4px 15px rgba(233, 30, 99, 0.5),
+                inset 0 2px 5px rgba(255, 255, 255, 0.3);
+            animation: sealPulse 2s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes sealPulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1); 
+                box-shadow: 0 4px 15px rgba(233, 30, 99, 0.5);
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.15); 
+                box-shadow: 0 6px 25px rgba(233, 30, 99, 0.7);
+            }
+        }
+
+        /* 信纸弹窗 - 不透明 */
+        .letter-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .letter-modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .letter-content-wrapper {
+            background: #ffffff !important;
+            padding: 45px;
+            border-radius: 15px;
+            max-width: 520px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+            transform: scale(0.8) translateY(50px);
+            transition: all 0.4s ease 0.1s;
+            position: relative;
+            opacity: 1 !important;
+        }
+
+        .letter-modal.show .letter-content-wrapper {
+            transform: scale(1) translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #888;
+            transition: all 0.3s ease;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            color: #e91e63;
+            background: #ffe4ec;
+            transform: scale(1.1);
+        }
+
+        .letter-content-wrapper h2 {
             color: #d63384;
             margin-bottom: 30px;
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             text-align: center;
         }
 
-        .card p {
-            color: #666;
-            line-height: 2.2;
-            font-size: 1.1rem;
+        .letter-content-wrapper p {
+            color: #444444 !important;
+            line-height: 2.3;
+            font-size: 1.08rem;
             margin-bottom: 20px;
             text-indent: 2em;
+            opacity: 1 !important;
         }
 
-        .love-text {
+        .letter-content-wrapper .love-text {
             color: #e91e63;
             font-weight: bold;
-            font-size: 1.3rem;
-            margin-top: 30px;
+            font-size: 1.25rem;
+            margin-top: 35px;
             text-align: center;
+            text-indent: 0;
         }
 
         /* 按钮 */
@@ -284,8 +450,13 @@
                 width: 240px;
             }
             
-            .card {
-                padding: 25px 20px;
+            .letter-content-wrapper {
+                padding: 35px 25px;
+            }
+            
+            .envelope {
+                width: 260px;
+                height: 180px;
             }
         }
     </style>
@@ -306,13 +477,15 @@
             <p class="hint">👆 点击火焰吹灭蜡烛许愿</p>
         </div>
 
-        <div class="card">
-            <h2>💌 TO：我的女孩 💌</h2>
-            <p>很高兴陪你长大了一岁！这是我以男朋友的身份陪你度过的第一个生日，真的很开心我们能相遇。</p>
-            <p>我是一个敏感的人，谢谢你能照顾我的情绪。感谢你出现在我的生命里，让我感受到了幸福与温暖。</p>
-            <p>往后的岁岁年年，我都希望我们的身边有彼此，相互包容，相互理解，共同成长！</p>
-            <p>祝我的女朋友天天开心，岁岁平安。生活温馨美好，梦想成真。</p>
-            <p class="love-text">生日快乐！永远爱你 ❤️</p>
+        <!-- 信封 -->
+        <div class="envelope-wrapper">
+            <p class="envelope-hint">💌 这里有一封给你的信，点击打开</p>
+            <div class="envelope" onclick="openLetter()">
+                <div class="envelope-body">
+                    <div class="envelope-flap"></div>
+                    <div class="envelope-seal">❤️</div>
+                </div>
+            </div>
         </div>
 
         <button class="btn" onclick="startFireworks()">🎆 放烟花庆祝 🎆</button>
@@ -321,6 +494,19 @@
             <span class="heart-big">❤️</span>
             <p>爱你的男朋友</p>
             <p id="date"></p>
+        </div>
+    </div>
+
+    <!-- 信纸弹窗 -->
+    <div class="letter-modal" id="letterModal" onclick="closeLetter(event)">
+        <div class="letter-content-wrapper" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeLetter()">✕</span>
+            <h2>💌 TO：我的女孩 💌</h2>
+            <p>很高兴陪你长大了一岁！这是我以男朋友的身份陪你度过的第一个生日，真的很开心我们能相遇。</p>
+            <p>我是一个敏感的人，谢谢你能照顾我的情绪。感谢你出现在我的生命里，让我感受到了幸福与温暖。</p>
+            <p>往后的岁岁年年，我都希望我们的身边有彼此，相互包容，相互理解，共同成长！</p>
+            <p>祝我的女朋友天天开心，岁岁平安。生活温馨美好，梦想成真。</p>
+            <p class="love-text">生日快乐！永远爱你 ❤️</p>
         </div>
     </div>
 
@@ -367,10 +553,33 @@
             }
             
             setTimeout(() => {
-                alert('🎂 蜡烛吹灭啦！雪儿闭上眼睛许个愿吧~\n✨ 你的愿望一定会实现的！');
+                alert('🎂 蜡烛吹灭啦！万雪闭上眼睛许个愿吧~\n✨ 你的愿望一定会实现的！');
             }, 500);
             
             candleBlown = true;
+        }
+
+        // 打开信封
+        function openLetter() {
+            const modal = document.getElementById('letterModal');
+            modal.classList.add('show');
+            
+            // 放烟花庆祝
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createFirework(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight * 0.7
+                    );
+                }, i * 100);
+            }
+        }
+
+        // 关闭信纸
+        function closeLetter(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const modal = document.getElementById('letterModal');
+            modal.classList.remove('show');
         }
 
         // 创建烟花
