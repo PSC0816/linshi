@@ -13,10 +13,35 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
-            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: 
+                radial-gradient(ellipse at top, #ffd1dc 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, #e0b0ff 0%, transparent 50%),
+                linear-gradient(135deg, #ff9a9e 0%, #fecfef 30%, #ffecd2 70%, #fecfef 100%);
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', sans-serif;
             overflow-x: hidden;
             position: relative;
+        }
+
+        /* 背景光效 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 182, 193, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(206, 147, 216, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 40% 40%, rgba(255, 236, 210, 0.3) 0%, transparent 30%);
+            pointer-events: none;
+            z-index: 0;
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
 
         /* 飘落的爱心 */
@@ -27,7 +52,8 @@
             animation: fall linear infinite;
             pointer-events: none;
             z-index: 1;
-            opacity: 0.7;
+            opacity: 0.6;
+            filter: drop-shadow(0 2px 4px rgba(255, 107, 157, 0.3));
         }
 
         @keyframes fall {
@@ -36,10 +62,10 @@
                 opacity: 0;
             }
             10% {
-                opacity: 0.7;
+                opacity: 0.6;
             }
             90% {
-                opacity: 0.7;
+                opacity: 0.6;
             }
             100% {
                 transform: translateY(110vh) rotate(360deg);
@@ -47,175 +73,256 @@
             }
         }
 
+        /* 星星闪烁 */
+        .star {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 50px 20px;
             text-align: center;
             position: relative;
             z-index: 10;
         }
 
         .title {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: #d63384;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
-            animation: pulse 2s ease-in-out infinite;
+            margin-bottom: 15px;
+            text-shadow: 
+                2px 2px 8px rgba(255, 255, 255, 0.9),
+                0 0 40px rgba(255, 107, 157, 0.4);
+            animation: titleGlow 3s ease-in-out infinite;
+            font-weight: 600;
+            letter-spacing: 3px;
         }
 
-        @keyframes pulse {
-            0%, 100% {
+        @keyframes titleGlow {
+            0%, 100% { 
                 transform: scale(1);
+                text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 107, 157, 0.4);
             }
-            50% {
-                transform: scale(1.05);
+            50% { 
+                transform: scale(1.03);
+                text-shadow: 2px 2px 12px rgba(255, 255, 255, 1), 0 0 60px rgba(255, 107, 157, 0.6);
             }
         }
 
         .subtitle {
-            font-size: 1.5rem;
-            color: #c2185b;
-            margin-bottom: 40px;
+            font-size: 1.6rem;
+            color: #ad1457;
+            margin-bottom: 50px;
             font-weight: 300;
+            letter-spacing: 5px;
+            text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.8);
         }
 
-        /* 蛋糕样式 */
+        /* 蛋糕样式 - 更精美 */
         .cake-container {
-            margin: 40px auto;
+            margin: 50px auto 60px;
             position: relative;
             display: inline-block;
+            filter: drop-shadow(0 20px 40px rgba(214, 51, 132, 0.3));
         }
 
         .cake {
             position: relative;
+            animation: cakeFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes cakeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .candle {
-            width: 15px;
-            height: 60px;
-            background: linear-gradient(to right, #fff 0%, #f8f9fa 50%, #fff 100%);
-            border-radius: 3px;
-            margin: 0 auto 5px;
+            width: 16px;
+            height: 70px;
+            background: linear-gradient(to right, #fff 0%, #f8f9fa 30%, #e9ecef 70%, #fff 100%);
+            border-radius: 4px;
+            margin: 0 auto 8px;
             position: relative;
+            box-shadow: 
+                inset 2px 0 4px rgba(255, 255, 255, 0.8),
+                inset -2px 0 4px rgba(0, 0, 0, 0.05),
+                0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .flame {
-            width: 20px;
-            height: 30px;
-            background: radial-gradient(ellipse at bottom, #ffeb3b 0%, #ff9800 50%, #ff5722 100%);
+            width: 24px;
+            height: 38px;
+            background: 
+                radial-gradient(ellipse at 50% 80%, #fff 0%, #ffeb3b 20%, #ff9800 50%, #ff5722 80%, transparent 100%);
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
             position: absolute;
-            top: -25px;
+            top: -35px;
             left: 50%;
             transform: translateX(-50%);
-            animation: flicker 0.5s ease-in-out infinite alternate;
-            box-shadow: 0 0 20px #ff9800, 0 0 40px #ff5722;
+            animation: flameFlicker 0.4s ease-in-out infinite alternate;
+            box-shadow: 
+                0 0 20px #ff9800,
+                0 0 40px #ff9800,
+                0 0 60px #ff5722,
+                0 0 80px rgba(255, 87, 34, 0.5);
             cursor: pointer;
             transition: all 0.3s ease;
+            z-index: 10;
         }
 
         .flame:hover {
-            transform: translateX(-50%) scale(1.2);
+            transform: translateX(-50%) scale(1.3);
+            filter: brightness(1.2);
         }
 
-        @keyframes flicker {
+        @keyframes flameFlicker {
             0% {
-                transform: translateX(-50%) scale(1) rotate(-2deg);
+                transform: translateX(-50%) scale(1) rotate(-3deg) translateY(0);
+                height: 38px;
+            }
+            25% {
+                transform: translateX(-50%) scale(1.05) rotate(2deg) translateY(-2px);
+                height: 42px;
+            }
+            50% {
+                transform: translateX(-50%) scale(0.98) rotate(-1deg) translateY(0);
+                height: 36px;
+            }
+            75% {
+                transform: translateX(-50%) scale(1.02) rotate(3deg) translateY(-1px);
+                height: 40px;
             }
             100% {
-                transform: translateX(-50%) scale(1.1) rotate(2deg);
+                transform: translateX(-50%) scale(1.05) rotate(-2deg) translateY(-2px);
+                height: 38px;
             }
         }
 
         .cake-layer {
-            width: 250px;
-            height: 80px;
-            background: linear-gradient(to bottom, #f8bbd9 0%, #f48fb1 100%);
-            border-radius: 10px 10px 5px 5px;
-            margin: 5px auto;
+            width: 280px;
+            height: 90px;
+            background: 
+                linear-gradient(to bottom, #f8bbd9 0%, #f48fb1 50%, #ec407a 100%);
+            border-radius: 12px 12px 6px 6px;
+            margin: 8px auto;
             position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.15),
+                inset 0 2px 0 rgba(255, 255, 255, 0.4);
         }
 
         .cake-layer::before {
             content: '';
             position: absolute;
-            top: 10px;
+            top: 12px;
             left: 0;
             right: 0;
-            height: 20px;
-            background: repeating-linear-gradient(
-                90deg,
-                #fff 0px,
-                #fff 20px,
-                #f8bbd9 20px,
-                #f8bbd9 40px
+            height: 24px;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    #fff 0px,
+                    #fff 22px,
+                    transparent 22px,
+                    transparent 44px
+                );
+            border-radius: 12px;
+            opacity: 0.9;
+        }
+
+        .cake-layer::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            right: 10px;
+            height: 8px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
             );
-            border-radius: 10px;
         }
 
         .cake-layer.bottom {
-            width: 300px;
-            height: 100px;
-            background: linear-gradient(to bottom, #ce93d8 0%, #ab47bc 100%);
+            width: 340px;
+            height: 110px;
+            background: 
+                linear-gradient(to bottom, #ce93d8 0%, #ab47bc 50%, #8e24aa 100%);
         }
 
         .cake-layer.bottom::before {
-            background: repeating-linear-gradient(
-                90deg,
-                #fff 0px,
-                #fff 20px,
-                #ce93d8 20px,
-                #ce93d8 40px
-            );
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    #fff 0px,
+                    #fff 22px,
+                    transparent 22px,
+                    transparent 44px
+                );
         }
 
         .hint {
             color: #c2185b;
-            font-size: 0.9rem;
-            margin-top: 10px;
-            animation: blink 2s ease-in-out infinite;
+            font-size: 1rem;
+            margin-top: 20px;
+            animation: blink 2.5s ease-in-out infinite;
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
         }
 
         @keyframes blink {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            50% { opacity: 0.4; }
         }
 
         /* 信封样式 - 更精致 */
         .envelope-wrapper {
-            margin: 50px auto;
+            margin: 60px auto;
         }
 
         .envelope-hint {
-            color: #c2185b;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            animation: blink 2s ease-in-out infinite;
+            color: #ad1457;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            animation: blink 2.5s ease-in-out infinite;
+            letter-spacing: 2px;
         }
 
         .envelope {
-            width: 300px;
-            height: 200px;
-            background: linear-gradient(145deg, #fff 0%, #fff0f5 50%, #ffe4ec 100%);
-            border-radius: 8px;
+            width: 320px;
+            height: 210px;
+            background: linear-gradient(145deg, #ffffff 0%, #fff5f8 30%, #ffe8f0 70%, #fff0f5 100%);
+            border-radius: 10px;
             position: relative;
             margin: 0 auto;
             cursor: pointer;
             box-shadow: 
-                0 15px 35px rgba(214, 51, 132, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.05);
-            transition: all 0.5s ease;
-            border: 1px solid rgba(255, 182, 193, 0.3);
+                0 20px 50px rgba(214, 51, 132, 0.35),
+                inset 0 2px 0 rgba(255, 255, 255, 0.9),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 182, 193, 0.25);
         }
 
         .envelope:hover {
-            transform: translateY(-10px) rotate(-2deg) scale(1.05);
+            transform: translateY(-15px) rotate(-3deg) scale(1.08);
             box-shadow: 
-                0 25px 50px rgba(214, 51, 132, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+                0 35px 70px rgba(214, 51, 132, 0.45),
+                inset 0 2px 0 rgba(255, 255, 255, 1);
         }
 
         .envelope-body {
@@ -223,7 +330,7 @@
             height: 100%;
             position: relative;
             overflow: hidden;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .envelope::before {
@@ -234,8 +341,8 @@
             right: 0;
             bottom: 0;
             background: 
-                linear-gradient(45deg, transparent 48%, rgba(255, 182, 193, 0.1) 49%, rgba(255, 182, 193, 0.1) 51%, transparent 52%);
-            background-size: 20px 20px;
+                linear-gradient(45deg, transparent 48%, rgba(255, 182, 193, 0.08) 49%, rgba(255, 182, 193, 0.08) 51%, transparent 52%);
+            background-size: 25px 25px;
             pointer-events: none;
         }
 
@@ -244,11 +351,13 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 52%;
-            background: linear-gradient(135deg, #ffc8d8 0%, #ff9eb5 50%, #ff85a2 100%);
+            height: 54%;
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffb6c1 30%, #ff9eb5 60%, #ff85a2 100%);
             clip-path: polygon(0 0, 50% 100%, 100% 0);
             z-index: 10;
-            box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 
+                inset 0 -3px 8px rgba(0, 0, 0, 0.08),
+                0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .envelope-flap::after {
@@ -257,52 +366,53 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 60%;
+            width: 65%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
         }
 
         .envelope-seal {
             position: absolute;
-            top: 48%;
+            top: 49%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 55px;
-            height: 55px;
-            background: radial-gradient(circle at 30% 30%, #ff6b9d 0%, #e91e63 50%, #c2185b 100%);
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 30% 30%, #ff85a2 0%, #e91e63 45%, #c2185b 100%);
             border-radius: 50%;
             z-index: 20;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             box-shadow: 
-                0 4px 15px rgba(233, 30, 99, 0.5),
-                inset 0 2px 5px rgba(255, 255, 255, 0.3);
-            animation: sealPulse 2s ease-in-out infinite;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+                0 6px 20px rgba(233, 30, 99, 0.5),
+                inset 0 3px 8px rgba(255, 255, 255, 0.4),
+                0 0 30px rgba(233, 30, 99, 0.3);
+            animation: sealPulse 2.2s ease-in-out infinite;
+            border: 3px solid rgba(255, 255, 255, 0.35);
         }
 
         @keyframes sealPulse {
             0%, 100% { 
                 transform: translate(-50%, -50%) scale(1); 
-                box-shadow: 0 4px 15px rgba(233, 30, 99, 0.5);
+                box-shadow: 0 6px 20px rgba(233, 30, 99, 0.5);
             }
             50% { 
-                transform: translate(-50%, -50%) scale(1.15); 
-                box-shadow: 0 6px 25px rgba(233, 30, 99, 0.7);
+                transform: translate(-50%, -50%) scale(1.18); 
+                box-shadow: 0 10px 35px rgba(233, 30, 99, 0.7);
             }
         }
 
-        /* 信纸弹窗 - 不透明 */
+        /* 信纸弹窗 */
         .letter-modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.65);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -310,6 +420,7 @@
             opacity: 0;
             visibility: hidden;
             transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
         }
 
         .letter-modal.show {
@@ -319,15 +430,17 @@
 
         .letter-content-wrapper {
             background: #ffffff !important;
-            padding: 45px;
-            border-radius: 15px;
-            max-width: 520px;
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 550px;
             width: 90%;
             max-height: 85vh;
             overflow-y: auto;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
+            box-shadow: 
+                0 30px 100px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
             transform: scale(0.8) translateY(50px);
-            transition: all 0.4s ease 0.1s;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s;
             position: relative;
             opacity: 1 !important;
         }
@@ -338,14 +451,14 @@
 
         .close-btn {
             position: absolute;
-            top: 18px;
-            right: 22px;
-            font-size: 1.6rem;
+            top: 20px;
+            right: 25px;
+            font-size: 1.8rem;
             cursor: pointer;
-            color: #888;
+            color: #999;
             transition: all 0.3s ease;
-            width: 35px;
-            height: 35px;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -355,21 +468,22 @@
         .close-btn:hover {
             color: #e91e63;
             background: #ffe4ec;
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(90deg);
         }
 
         .letter-content-wrapper h2 {
             color: #d63384;
-            margin-bottom: 30px;
-            font-size: 1.7rem;
+            margin-bottom: 35px;
+            font-size: 1.8rem;
             text-align: center;
+            letter-spacing: 2px;
         }
 
         .letter-content-wrapper p {
-            color: #444444 !important;
-            line-height: 2.3;
-            font-size: 1.08rem;
-            margin-bottom: 20px;
+            color: #333333 !important;
+            line-height: 2.4;
+            font-size: 1.1rem;
+            margin-bottom: 22px;
             text-indent: 2em;
             opacity: 1 !important;
         }
@@ -377,29 +491,11 @@
         .letter-content-wrapper .love-text {
             color: #e91e63;
             font-weight: bold;
-            font-size: 1.25rem;
-            margin-top: 35px;
+            font-size: 1.3rem;
+            margin-top: 40px;
             text-align: center;
             text-indent: 0;
-        }
-
-        /* 按钮 */
-        .btn {
-            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            margin: 20px 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(255, 107, 157, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(255, 107, 157, 0.6);
+            letter-spacing: 2px;
         }
 
         /* 烟花效果 */
@@ -410,15 +506,16 @@
         }
 
         .footer {
-            margin-top: 50px;
-            color: #880e4f;
-            font-size: 1rem;
+            margin-top: 60px;
+            color: #6a1b9a;
+            font-size: 1.1rem;
         }
 
         .heart-big {
-            font-size: 3rem;
-            animation: heartbeat 1s ease-in-out infinite;
+            font-size: 3.5rem;
+            animation: heartbeat 1.2s ease-in-out infinite;
             display: inline-block;
+            filter: drop-shadow(0 4px 8px rgba(233, 30, 99, 0.4));
         }
 
         @keyframes heartbeat {
@@ -426,28 +523,54 @@
                 transform: scale(1);
             }
             25% {
-                transform: scale(1.1);
+                transform: scale(1.15);
             }
             50% {
                 transform: scale(1);
             }
             75% {
-                transform: scale(1.1);
+                transform: scale(1.15);
             }
+        }
+
+        /* 音乐提示 */
+        .music-hint {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #c2185b;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: musicHint 2s ease-in-out infinite;
+        }
+
+        @keyframes musicHint {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         /* 响应式 */
         @media (max-width: 600px) {
             .title {
-                font-size: 2rem;
+                font-size: 2.2rem;
+                letter-spacing: 1px;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+                letter-spacing: 2px;
             }
             
             .cake-layer {
-                width: 200px;
+                width: 220px;
             }
             
             .cake-layer.bottom {
-                width: 240px;
+                width: 270px;
             }
             
             .letter-content-wrapper {
@@ -455,13 +578,20 @@
             }
             
             .envelope {
-                width: 260px;
-                height: 180px;
+                width: 280px;
+                height: 190px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://www.soundjay.com/misc/sounds/happy-birthday-piano-version-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="music-hint">🎵 生日快乐歌播放中 ♪</div>
+
     <div class="container">
         <h1 class="title">🎂 杨万雪 生日快乐 🎂</h1>
         <p class="subtitle">致我最爱的女孩</p>
@@ -488,8 +618,6 @@
             </div>
         </div>
 
-        <button class="btn" onclick="startFireworks()">🎆 放烟花庆祝 🎆</button>
-
         <div class="footer">
             <span class="heart-big">❤️</span>
             <p>爱你的男朋友</p>
@@ -513,23 +641,46 @@
     <script>
         let candleBlown = false;
 
+        // 创建星星
+        function createStars() {
+            for (let i = 0; i < 30; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.body.appendChild(star);
+            }
+        }
+
         // 创建飘落的爱心
         function createHearts() {
-            const heartEmojis = ['❤️', '💕', '💗', '💖', '💘', '💝'];
+            const heartEmojis = ['❤️', '💕', '💗', '💖', '💘', '💝', '✨', '🌟'];
             
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
                 heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
                 heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
-                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                heart.style.animationDuration = (Math.random() * 4 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 18 + 14) + 'px';
                 document.body.appendChild(heart);
                 
                 setTimeout(() => {
                     heart.remove();
-                }, 7000);
-            }, 300);
+                }, 9000);
+            }, 250);
+        }
+
+        // 自动烟花
+        function autoFireworks() {
+            setInterval(() => {
+                createFirework(
+                    Math.random() * window.innerWidth,
+                    Math.random() * window.innerHeight * 0.7
+                );
+            }, 800);
         }
 
         // 吹灭蜡烛
@@ -539,22 +690,22 @@
             const flames = document.querySelectorAll('.flame');
             flames.forEach(flame => {
                 flame.style.opacity = '0';
-                flame.style.transition = 'opacity 0.8s ease';
+                flame.style.transition = 'opacity 1s ease';
             });
             
-            // 播放庆祝效果
-            for (let i = 0; i < 25; i++) {
+            // 大量烟花庆祝
+            for (let i = 0; i < 40; i++) {
                 setTimeout(() => {
                     createFirework(
                         Math.random() * window.innerWidth,
                         Math.random() * window.innerHeight
                     );
-                }, i * 80);
+                }, i * 60);
             }
             
             setTimeout(() => {
                 alert('🎂 蜡烛吹灭啦！万雪闭上眼睛许个愿吧~\n✨ 你的愿望一定会实现的！');
-            }, 500);
+            }, 600);
             
             candleBlown = true;
         }
@@ -565,13 +716,13 @@
             modal.classList.add('show');
             
             // 放烟花庆祝
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
                     createFirework(
                         Math.random() * window.innerWidth,
                         Math.random() * window.innerHeight * 0.7
                     );
-                }, i * 100);
+                }, i * 80);
             }
         }
 
@@ -584,21 +735,22 @@
 
         // 创建烟花
         function createFirework(x, y) {
-            const colors = ['#ff6b9d', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6b6b', '#c44569'];
-            const particles = 15;
+            const colors = ['#ff6b9d', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6b6b', '#c44569', '#fff', '#ff9ff3', '#54a0ff'];
+            const particles = 18;
             
             for (let i = 0; i < particles; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'firework';
                 particle.style.left = x + 'px';
                 particle.style.top = y + 'px';
-                particle.style.width = '8px';
-                particle.style.height = '8px';
+                particle.style.width = '10px';
+                particle.style.height = '10px';
                 particle.style.borderRadius = '50%';
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.boxShadow = `0 0 10px ${particle.style.background}`;
                 
                 const angle = (i / particles) * Math.PI * 2;
-                const velocity = 100 + Math.random() * 100;
+                const velocity = 120 + Math.random() * 80;
                 const vx = Math.cos(angle) * velocity;
                 const vy = Math.sin(angle) * velocity;
                 
@@ -609,9 +761,9 @@
                 let opacity = 1;
                 
                 const animate = () => {
-                    posX += vx * 0.02;
-                    posY += vy * 0.02 + 2;
-                    opacity -= 0.02;
+                    posX += vx * 0.018;
+                    posY += vy * 0.018 + 1.5;
+                    opacity -= 0.015;
                     
                     particle.style.left = posX + 'px';
                     particle.style.top = posY + 'px';
@@ -628,16 +780,22 @@
             }
         }
 
-        // 开始烟花表演
-        function startFireworks() {
-            for (let i = 0; i < 12; i++) {
-                setTimeout(() => {
-                    createFirework(
-                        Math.random() * window.innerWidth,
-                        Math.random() * window.innerHeight * 0.6
-                    );
-                }, i * 250);
-            }
+        // 播放背景音乐
+        function playMusic() {
+            const music = document.getElementById('bgMusic');
+            music.volume = 0.4;
+            
+            // 用户交互后播放（浏览器策略）
+            const play = () => {
+                music.play().catch(() => {
+                    // 如果自动播放被阻止，等待用户点击
+                    document.body.addEventListener('click', () => {
+                        music.play().catch(() => {});
+                    }, { once: true });
+                });
+            };
+            
+            play();
         }
 
         // 设置日期
@@ -648,12 +806,22 @@
         });
 
         // 初始化
+        createStars();
         createHearts();
+        autoFireworks();
+        playMusic();
         
-        // 自动放几个烟花
+        // 开场烟花
         setTimeout(() => {
-            startFireworks();
-        }, 1000);
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createFirework(
+                        Math.random() * window.innerWidth,
+                        Math.random() * window.innerHeight * 0.6
+                    );
+                }, i * 200);
+            }
+        }, 500);
     </script>
 </body>
 </html>
